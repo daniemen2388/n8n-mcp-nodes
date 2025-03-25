@@ -1,11 +1,11 @@
 # Usar la imagen oficial de n8n
 FROM n8nio/n8n:latest
 
-# Actualizar Node.js a 20.x (usando apk para Alpine)
+# Instalar Node.js 20.x manualmente
 USER root
-RUN apk add --no-cache curl && \
-    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apk add --no-cache nodejs
+RUN curl -fsSL https://nodejs.org/dist/v20.15.1/node-v20.15.1-linux-x64.tar.xz -o node.tar.xz && \
+    tar -xJf node.tar.xz -C /usr/local --strip-components=1 && \
+    rm node.tar.xz
 
 # Instalar el paquete de nodos personalizados
 RUN npm install nerding-io/n8n-nodes-mcp
